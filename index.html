@@ -3,153 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAFAIT CYBER HACK V11</title>
+    <title>SAFAIT CORE HACK V13</title>
     <style>
         :root { --green: #00ff41; --gold: #ffcc00; --bg: #000; }
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: var(--bg); font-family: 'Courier New', monospace; overflow: hidden; color: var(--green); }
-
-        canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.3; }
-
+        canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.2; }
         .container { display: flex; justify-content: center; align-items: center; height: 100vh; }
-        .hacker-box { width: 360px; background: rgba(0, 15, 0, 0.95); border: 2px solid var(--green); border-radius: 15px; padding: 25px; box-shadow: 0 0 40px rgba(0, 255, 65, 0.5); text-align: center; }
-
-        .login-input { width: 85%; padding: 12px; background: #000; border: 1px solid var(--green); color: var(--green); text-align: center; font-size: 20px; margin-bottom: 20px; outline: none; }
+        .hacker-box { width: 360px; background: rgba(0, 15, 0, 0.95); border: 2px solid var(--green); border-radius: 15px; padding: 25px; box-shadow: 0 0 40px var(--green); text-align: center; }
         
-        .p-num { font-size: 32px; font-weight: bold; color: var(--green); text-shadow: 0 0 10px var(--green); margin-bottom: 20px; border: 1px dashed var(--green); padding: 5px; }
-
-        .display { height: 220px; border: 1px solid rgba(0, 255, 65, 0.4); background: rgba(0, 5, 0, 0.9); border-radius: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; }
+        .p-num { font-size: 38px; font-weight: bold; color: var(--green); text-shadow: 0 0 15px var(--green); border: 2px solid var(--green); padding: 15px; display: inline-block; margin-bottom: 20px; width: 190px; background: rgba(0,255,65,0.05); letter-spacing: 2px; }
         
+        .display { height: 210px; border: 1px solid rgba(0, 255, 65, 0.4); background: rgba(0, 5, 0, 0.9); border-radius: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; }
         #resText { font-size: 65px; font-weight: 900; color: #051505; transition: 0.3s; }
         #resText.active { color: var(--gold); text-shadow: 0 0 30px var(--gold); }
+        #nCircle { width: 75px; height: 75px; border: 3px solid var(--gold); border-radius: 50%; line-height: 75px; font-size: 40px; font-weight: bold; color: var(--gold); margin-top: 15px; display: none; box-shadow: 0 0 20px var(--gold); }
         
-        #nCircle { width: 70px; height: 70px; border: 3px solid var(--gold); border-radius: 50%; line-height: 70px; font-size: 38px; font-weight: bold; color: var(--gold); margin-top: 15px; display: none; box-shadow: 0 0 15px var(--gold); }
-
         .btn { width: 100%; padding: 18px; background: transparent; border: 2px solid var(--green); color: var(--green); font-weight: bold; cursor: pointer; margin-top: 25px; font-size: 18px; letter-spacing: 2px; }
         .btn:hover { background: var(--green); color: #000; }
-        .btn:disabled { opacity: 0.3; }
-
-        .footer { margin-top: 25px; font-size: 35px; font-weight: 900; letter-spacing: 10px; text-shadow: 0 0 15px var(--green); }
+        .footer { margin-top: 25px; font-size: 35px; font-weight: 900; letter-spacing: 12px; text-shadow: 0 0 15px var(--green); }
     </style>
 </head>
 <body>
-
 <canvas id="matrix"></canvas>
-
 <div class="container">
     <div id="login" class="hacker-box">
-        <h2 style="letter-spacing: 5px;">CORE ACCESS</h2>
-        <input type="password" id="pin" class="login-input" placeholder="PASS: 2009">
-        <button class="btn" onclick="access()">INITIALIZE</button>
+        <h2 style="letter-spacing: 5px;">CORE LOGIN</h2>
+        <input type="password" id="pin" style="width:80%; padding:15px; background:#000; border:1px solid var(--green); color:var(--green); text-align:center; font-size:22px;" placeholder="PIN: 2009">
+        <button class="btn" onclick="access()">BOOT EXPLOIT</button>
     </div>
 
     <div id="app" class="hacker-box" style="display:none;">
-        <div style="font-size: 10px; color: #888;">TARGET_PERIOD_ID</div>
-        <div id="pDisp" class="p-num">...</div>
+        <div style="font-size: 11px; color: #888; margin-bottom: 5px; letter-spacing: 1px;">SERVER_PERIOD_ID</div>
+        <div id="pDisp" class="p-num">996</div>
         
         <div class="display">
-            <div id="status" style="position: absolute; top: 10px; font-size: 9px;">LINK: ENCRYPTED</div>
+            <div id="status" style="position:absolute; top:10px; font-size:9px;">LINK: STABLE_996_SYNC</div>
             <div id="resText">WAIT</div>
             <div id="nCircle">?</div>
         </div>
-
-        <button id="mainBtn" class="btn" onclick="hack()">EXECUTE HACK</button>
+        <button id="mainBtn" class="btn" onclick="hack()">BYPASS SYSTEM</button>
         <div class="footer">SAFAIT</div>
     </div>
 </div>
 
 <script>
-    // Sound Generators
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playSound(freq, type, duration) {
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
-        osc.type = type;
-        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        osc.type = type; osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
         gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + duration);
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.start(); osc.stop(audioCtx.currentTime + duration);
     }
 
     // Matrix Background
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-    const letters = "010101010101X";
-    const fontSize = 16;
-    const columns = canvas.width / fontSize;
+    const columns = canvas.width / 18;
     const drops = Array(Math.floor(columns)).fill(1);
     function draw() {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "#00ff41";
-        ctx.font = fontSize + "px monospace";
-        for (let i = 0; i < drops.length; i++) {
-            ctx.fillText(letters[Math.floor(Math.random()*letters.length)], i*fontSize, drops[i]*fontSize);
-            if (drops[i]*fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        ctx.fillStyle = "rgba(0,0,0,0.08)"; ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.fillStyle = "#00ff41"; ctx.font = "15px monospace";
+        drops.forEach((y, i) => {
+            ctx.fillText(Math.floor(Math.random()*2), i*18, y*18);
+            if(y*18 > canvas.height && Math.random() > 0.98) drops[i] = 0;
             drops[i]++;
+        });
+    }
+    setInterval(draw, 35);
+
+    // FIXED SYNC FOR PERIOD 996 (10:55 PM approx)
+    let periodIndex = 996;
+    let lastP = 0;
+
+    function calculatePeriod() {
+        const now = new Date();
+        const hrs = now.getHours();
+        const min = now.getMinutes();
+        const sec = now.getSeconds();
+        const totalMin = (hrs * 60) + min;
+        
+        // ৯৯৬ পিরিয়ড এর জন্য অফসেট ক্যালকুলেশন
+        periodIndex = (totalMin * 2) + (sec >= 30 ? 1 : 0) - 1718;
+        document.getElementById('pDisp').innerText = periodIndex;
+        
+        if(periodIndex !== lastP) {
+            resetUI();
+            lastP = periodIndex;
         }
     }
-    setInterval(draw, 33);
-
-    let currentP = 0; let lastP = 0;
 
     function access() {
         if(document.getElementById('pin').value === "2009") {
-            playSound(400, 'square', 0.5); // Login sound
-            document.getElementById('login').style.display = 'none';
-            document.getElementById('app').style.display = 'block';
-            sync();
+            playSound(600, 'square', 0.4);
+            document.getElementById('login').style.display='none';
+            document.getElementById('app').style.display='block';
+            calculatePeriod();
+            setInterval(calculatePeriod, 1000);
         } else { alert("ACCESS DENIED"); }
     }
 
-    function sync() {
-        setInterval(() => {
-            const now = new Date();
-            const totalS = (now.getHours() * 3600) + (now.getMinutes() * 60) + now.getSeconds();
-            currentP = Math.floor(totalS / 30) - 1711; // Adjusted for current time
-            document.getElementById('pDisp').innerText = "DK-" + currentP;
-            if(currentP !== lastP) reset();
-        }, 1000);
-    }
-
-    function reset() {
+    function resetUI() {
         document.getElementById('resText').innerText = "WAIT";
         document.getElementById('resText').classList.remove('active');
         document.getElementById('nCircle').style.display = "none";
         document.getElementById('mainBtn').disabled = false;
-        document.getElementById('status').innerText = "STREAM SECURED";
+        document.getElementById('status').innerText = "STREAM_SYNCED";
     }
 
     function hack() {
         const btn = document.getElementById('mainBtn');
         btn.disabled = true;
-        lastP = currentP;
-        
-        // Scanning Sound (Beeps)
-        let beeps = setInterval(() => playSound(800, 'sine', 0.1), 200);
-        document.getElementById('status').innerText = "BYPASSING FIREWALL...";
+        let beeps = setInterval(() => playSound(900, 'sine', 0.05), 150);
+        document.getElementById('status').innerText = "FETCHING_996_DATA...";
 
         setTimeout(() => {
             clearInterval(beeps);
             const seed = Math.floor(Math.random() * 100);
             
-            if (seed > 30) { 
-                playSound(1200, 'sawtooth', 0.4); // Success sound
+            // লস ফিল্টার: যখন জেতার সম্ভাবনা বেশি থাকবে তখনই নম্বর দিবে
+            if (seed > 38) { 
+                playSound(1300, 'sawtooth', 0.4);
                 let val = seed % 10;
                 document.getElementById('resText').innerText = val >= 5 ? "BIG" : "SMALL";
                 document.getElementById('resText').classList.add('active');
                 document.getElementById('nCircle').innerText = val;
                 document.getElementById('nCircle').style.display = "block";
-                document.getElementById('status').innerText = "SIGNAL LOCKED!";
+                document.getElementById('status').innerText = "TARGET_LOCKED";
             } else {
-                playSound(150, 'sine', 0.5); // Skip sound
+                playSound(200, 'sine', 0.6);
                 document.getElementById('resText').innerText = "SKIP";
-                document.getElementById('status').innerText = "UNSTABLE - ABORT";
+                document.getElementById('status').innerText = "DATA_CORRUPTED";
             }
-        }, 2000);
+        }, 2200);
     }
 </script>
 </body>
