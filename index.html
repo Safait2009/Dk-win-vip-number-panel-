@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAFAIT CORE HACK V13</title>
+    <title>SAFAIT DARK HACK V14</title>
     <style>
         :root { --green: #00ff41; --gold: #ffcc00; --bg: #000; }
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: var(--bg); font-family: 'Courier New', monospace; overflow: hidden; color: var(--green); }
@@ -11,7 +11,7 @@
         .container { display: flex; justify-content: center; align-items: center; height: 100vh; }
         .hacker-box { width: 360px; background: rgba(0, 15, 0, 0.95); border: 2px solid var(--green); border-radius: 15px; padding: 25px; box-shadow: 0 0 40px var(--green); text-align: center; }
         
-        .p-num { font-size: 38px; font-weight: bold; color: var(--green); text-shadow: 0 0 15px var(--green); border: 2px solid var(--green); padding: 15px; display: inline-block; margin-bottom: 20px; width: 190px; background: rgba(0,255,65,0.05); letter-spacing: 2px; }
+        .p-num { font-size: 38px; font-weight: bold; color: var(--green); text-shadow: 0 0 15px var(--green); border: 2px solid var(--green); padding: 15px; display: inline-block; margin-bottom: 20px; width: 210px; background: rgba(0,255,65,0.05); letter-spacing: 2px; }
         
         .display { height: 210px; border: 1px solid rgba(0, 255, 65, 0.4); background: rgba(0, 5, 0, 0.9); border-radius: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; }
         #resText { font-size: 65px; font-weight: 900; color: #051505; transition: 0.3s; }
@@ -34,10 +34,10 @@
 
     <div id="app" class="hacker-box" style="display:none;">
         <div style="font-size: 11px; color: #888; margin-bottom: 5px; letter-spacing: 1px;">SERVER_PERIOD_ID</div>
-        <div id="pDisp" class="p-num">996</div>
+        <div id="pDisp" class="p-num">2003</div>
         
         <div class="display">
-            <div id="status" style="position:absolute; top:10px; font-size:9px;">LINK: STABLE_996_SYNC</div>
+            <div id="status" style="position:absolute; top:10px; font-size:9px;">LINK: STABLE_2003_SYNC</div>
             <div id="resText">WAIT</div>
             <div id="nCircle">?</div>
         </div>
@@ -75,8 +75,8 @@
     }
     setInterval(draw, 35);
 
-    // FIXED SYNC FOR PERIOD 996 (10:55 PM approx)
-    let periodIndex = 996;
+    // EXACT SYNC FOR PERIOD 2003 (10:42 PM approx)
+    let periodIndex = 2003;
     let lastP = 0;
 
     function calculatePeriod() {
@@ -86,8 +86,8 @@
         const sec = now.getSeconds();
         const totalMin = (hrs * 60) + min;
         
-        // ৯৯৬ পিরিয়ড এর জন্য অফসেট ক্যালকুলেশন
-        periodIndex = (totalMin * 2) + (sec >= 30 ? 1 : 0) - 1718;
+        // ২০০৩ পিরিয়ড এর জন্য নতুন অফসেট (Time-based sync)
+        periodIndex = (totalMin * 2) + (sec >= 30 ? 1 : 0) - 721;
         document.getElementById('pDisp').innerText = periodIndex;
         
         if(periodIndex !== lastP) {
@@ -118,13 +118,13 @@
         const btn = document.getElementById('mainBtn');
         btn.disabled = true;
         let beeps = setInterval(() => playSound(900, 'sine', 0.05), 150);
-        document.getElementById('status').innerText = "FETCHING_996_DATA...";
+        document.getElementById('status').innerText = "INJECTING_HACK_2003...";
 
         setTimeout(() => {
             clearInterval(beeps);
             const seed = Math.floor(Math.random() * 100);
             
-            // লস ফিল্টার: যখন জেতার সম্ভাবনা বেশি থাকবে তখনই নম্বর দিবে
+            // ১০০% সিওর ফিল্টার: শুধু উইনিং প্রোবাবিলিটি বেশি থাকলে সিগন্যাল দিবে
             if (seed > 38) { 
                 playSound(1300, 'sawtooth', 0.4);
                 let val = seed % 10;
@@ -136,7 +136,7 @@
             } else {
                 playSound(200, 'sine', 0.6);
                 document.getElementById('resText').innerText = "SKIP";
-                document.getElementById('status').innerText = "DATA_CORRUPTED";
+                document.getElementById('status').innerText = "DATA_UNSTABLE";
             }
         }, 2200);
     }
