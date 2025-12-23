@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAFAIT CYBER HACK V11</title>
+    <style>
+        :root { --green: #00ff41; --gold: #ffcc00; --bg: #000; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: var(--bg); font-family: 'Courier New', monospace; overflow: hidden; color: var(--green); }
+
+        canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.3; }
+
+        .container { display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .hacker-box { width: 360px; background: rgba(0, 15, 0, 0.95); border: 2px solid var(--green); border-radius: 15px; padding: 25px; box-shadow: 0 0 40px rgba(0, 255, 65, 0.5); text-align: center; }
+
+        .login-input { width: 85%; padding: 12px; background: #000; border: 1px solid var(--green); color: var(--green); text-align: center; font-size: 20px; margin-bottom: 20px; outline: none; }
+        
+        .p-num { font-size: 32px; font-weight: bold; color: var(--green); text-shadow: 0 0 10px var(--green); margin-bottom: 20px; border: 1px dashed var(--green); padding: 5px; }
+
+        .display { height: 220px; border: 1px solid rgba(0, 255, 65, 0.4); background: rgba(0, 5, 0, 0.9); border-radius: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; }
+        
+        #resText { font-size: 65px; font-weight: 900; color: #051505; transition: 0.3s; }
+        #resText.active { color: var(--gold); text-shadow: 0 0 30px var(--gold); }
+        
+        #nCircle { width: 70px; height: 70px; border: 3px solid var(--gold); border-radius: 50%; line-height: 70px; font-size: 38px; font-weight: bold; color: var(--gold); margin-top: 15px; display: none; box-shadow: 0 0 15px var(--gold); }
+
+        .btn { width: 100%; padding: 18px; background: transparent; border: 2px solid var(--green); color: var(--green); font-weight: bold; cursor: pointer; margin-top: 25px; font-size: 18px; letter-spacing: 2px; }
+        .btn:hover { background: var(--green); color: #000; }
+        .btn:disabled { opacity: 0.3; }
+
+        .footer { margin-top: 25px; font-size: 35px; font-weight: 900; letter-spacing: 10px; text-shadow: 0 0 15px var(--green); }
+    </style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div class="container">
+    <div id="login" class="hacker-box">
+        <h2 style="letter-spacing: 5px;">CORE ACCESS</h2>
+        <input type="password" id="pin" class="login-input" placeholder="PASS: 2009">
+        <button class="btn" onclick="access()">INITIALIZE</button>
+    </div>
+
+    <div id="app" class="hacker-box" style="display:none;">
+        <div style="font-size: 10px; color: #888;">TARGET_PERIOD_ID</div>
+        <div id="pDisp" class="p-num">...</div>
+        
+        <div class="display">
+            <div id="status" style="position: absolute; top: 10px; font-size: 9px;">LINK: ENCRYPTED</div>
+            <div id="resText">WAIT</div>
+            <div id="nCircle">?</div>
+        </div>
+
+        <button id="mainBtn" class="btn" onclick="hack()">EXECUTE HACK</button>
+        <div class="footer">SAFAIT</div>
+    </div>
+</div>
+
+<script>
+    // Sound Generators
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playSound(freq, type, duration) {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+    }
+
+    // Matrix Background
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    const letters = "010101010101X";
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+    function draw() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#00ff41";
+        ctx.font = fontSize + "px monospace";
+        for (let i = 0; i < drops.length; i++) {
+            ctx.fillText(letters[Math.floor(Math.random()*letters.length)], i*fontSize, drops[i]*fontSize);
+            if (drops[i]*fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+            drops[i]++;
+        }
+    }
+    setInterval(draw, 33);
+
+    let currentP = 0; let lastP = 0;
+
+    function access() {
+        if(document.getElementById('pin').value === "2009") {
+            playSound(400, 'square', 0.5); // Login sound
+            document.getElementById('login').style.display = 'none';
+            document.getElementById('app').style.display = 'block';
+            sync();
+        } else { alert("ACCESS DENIED"); }
+    }
+
+    function sync() {
+        setInterval(() => {
+            const now = new Date();
+            const totalS = (now.getHours() * 3600) + (now.getMinutes() * 60) + now.getSeconds();
+            currentP = Math.floor(totalS / 30) - 1711; // Adjusted for current time
+            document.getElementById('pDisp').innerText = "DK-" + currentP;
+            if(currentP !== lastP) reset();
+        }, 1000);
+    }
+
+    function reset() {
+        document.getElementById('resText').innerText = "WAIT";
+        document.getElementById('resText').classList.remove('active');
+        document.getElementById('nCircle').style.display = "none";
+        document.getElementById('mainBtn').disabled = false;
+        document.getElementById('status').innerText = "STREAM SECURED";
+    }
+
+    function hack() {
+        const btn = document.getElementById('mainBtn');
+        btn.disabled = true;
+        lastP = currentP;
+        
+        // Scanning Sound (Beeps)
+        let beeps = setInterval(() => playSound(800, 'sine', 0.1), 200);
+        document.getElementById('status').innerText = "BYPASSING FIREWALL...";
+
+        setTimeout(() => {
+            clearInterval(beeps);
+            const seed = Math.floor(Math.random() * 100);
+            
+            if (seed > 30) { 
+                playSound(1200, 'sawtooth', 0.4); // Success sound
+                let val = seed % 10;
+                document.getElementById('resText').innerText = val >= 5 ? "BIG" : "SMALL";
+                document.getElementById('resText').classList.add('active');
+                document.getElementById('nCircle').innerText = val;
+                document.getElementById('nCircle').style.display = "block";
+                document.getElementById('status').innerText = "SIGNAL LOCKED!";
+            } else {
+                playSound(150, 'sine', 0.5); // Skip sound
+                document.getElementById('resText').innerText = "SKIP";
+                document.getElementById('status').innerText = "UNSTABLE - ABORT";
+            }
+        }, 2000);
+    }
+</script>
+</body>
+</html>
